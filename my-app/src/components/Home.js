@@ -1,34 +1,24 @@
-// src/hooks/useFetchMessage.js
+import React, { useEffect, useState } from 'react';
+import { Container, Typography } from '@mui/material';
 
-import { useState, useEffect } from 'react';
-
-const useFetchMessage = () => {
+const Home = () => {
   const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  const fetchMessage = () => {
-    setLoading(true);
-    setError(null);
-
-    fetch('/api/hello')
-      .then(response => response.json())
-      .then(data => {
-        setMessage(data.message);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error('Error fetching message:', error);
-        setError('Error fetching message. Please try again.');
-        setLoading(false);
-      });
-  };
 
   useEffect(() => {
-    fetchMessage();
+    fetch('/api/hello')
+      .then(response => response.json())
+      .then(data => setMessage(data.message))
+      .catch(error => console.error('Error fetching message:', error));
   }, []);
 
-  return { message, loading, error, fetchMessage };
+  return (
+    <Container>
+      <Typography variant="h4" gutterBottom>
+        {message || 'Loading...'}
+      </Typography>
+    </Container>
+  );
 };
 
-export default useFetchMessage;
+export default Home;
+
