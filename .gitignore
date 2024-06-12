@@ -16,3 +16,16 @@ venv/
 # Ignore outros arquivos grandes
 *.zip
 node_modules
+<<<<<<< Updated upstream
+node_modules
+node_modules
+node_modules
+node_modules
+node_modules
+node_modules
+node_modules
+node_modules
+node_modules
+node_modules
+=======
+>>>>>>> Stashed changes
