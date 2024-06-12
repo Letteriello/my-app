@@ -1,23 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Typography, Button, CircularProgress, Alert } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+// src/hooks/useFetchMessage.js
 
-const useStyles = makeStyles({
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: '100vh',
-    textAlign: 'center',
-  },
-  button: {
-    marginTop: '20px',
-  },
-});
+import { useState, useEffect } from 'react';
 
-const Home = () => {
-  const classes = useStyles();
+const useFetchMessage = () => {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -43,22 +28,7 @@ const Home = () => {
     fetchMessage();
   }, []);
 
-  return (
-    <Container className={classes.container}>
-      {loading ? (
-        <CircularProgress />
-      ) : error ? (
-        <Alert severity="error">{error}</Alert>
-      ) : (
-        <Typography variant="h4" gutterBottom>
-          {message}
-        </Typography>
-      )}
-      <Button variant="contained" color="primary" className={classes.button} onClick={fetchMessage}>
-        Recarregar Mensagem
-      </Button>
-    </Container>
-  );
+  return { message, loading, error, fetchMessage };
 };
 
-export default Home;
+export default useFetchMessage;
