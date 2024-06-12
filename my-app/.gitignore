@@ -1,0 +1,28 @@
+# Ignore arquivos de bytecode do Python
+__pycache__/
+*.pyc
+
+# Ignore diretórios de ambiente virtual
+venv/
+.env/
+
+# Ignore arquivos específicos do sistema
+.DS_Store
+
+# Ignore logs e bancos de dados
+*.log
+*.sqlite3
+
+# Ignore outros arquivos grandes
+*.zip
+node_modules
+node_modules
+node_modules
+node_modules
+node_modules
+node_modules
+node_modules
+node_modules
+node_modules
+node_modules
+node_modules
