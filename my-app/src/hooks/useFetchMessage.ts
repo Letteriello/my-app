@@ -37,3 +37,4 @@ const useFetchMessage = (): UseFetchMessageResult => {
 };
 
 export default useFetchMessage;
+
