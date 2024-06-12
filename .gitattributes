@@ -1,5 +1,0 @@
-*.zip filter=lfs diff=lfs merge=lfs -text
-<<<<<<< HEAD
-my-app.zip filter=lfs diff=lfs merge=lfs -text
-=======
->>>>>>> f8d314e7db25d0451bbbf9cc3e395062f15b5794
