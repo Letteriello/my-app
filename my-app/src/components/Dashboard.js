@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Grid, Paper, Typography, Box, Card, CardContent, List, ListItem, ListItemIcon, ListItemText, Drawer, IconButton, AppBar, Toolbar, CssBaseline, Avatar, Divider, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TablePagination, TextField, Button } from '@mui/material';
+import { Container, Grid, Paper, Typography, Box, Card, CardContent, List, ListItem, ListItemIcon, ListItemText, Drawer, IconButton, AppBar, Toolbar, CssBaseline, Avatar, Divider, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TablePagination, TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, AreaChart, Area, PieChart, Pie, Cell, Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from 'recharts';
 import HomeIcon from '@mui/icons-material/Home';
@@ -224,12 +224,34 @@ const Dashboard = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [user, setUser] = useState(null);
+  const [userData, setUserData] = useState({});
+  const [tde, setTde] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setUser(user);
+        fetch('/api/user_data', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        })
+          .then(response => response.json())
+          .then(data => {
+            setUserData(data);
+            fetch('/api/calculate_tde', {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+              }
+            })
+              .then(response => response.json())
+              .then(data => setTde(data.tde));
+          });
       } else {
         navigate('/login');
       }
@@ -348,6 +370,22 @@ const Dashboard = () => {
                       </Typography>
                     </CardContent>
                   </StyledCard>
+                </Grid>
+
+                {/* User Data and TDE */}
+                <Grid item xs={12}>
+                  <Item>
+                    <Typography variant="h6" gutterBottom>
+                      User Data
+                    </Typography>
+                    <Typography variant="body1">Height: {userData.height} cm</Typography>
+                    <Typography variant="body1">Weight: {userData.weight} kg</Typography>
+                    <Typography variant="body1">Age: {userData.age}</Typography>
+                    <Typography variant="body1">Activity Level: {userData.activity_level}</Typography>
+                    <Typography variant="h5" gutterBottom>
+                      Total Daily Energy Expenditure (TDE): {tde} kcal
+                    </Typography>
+                  </Item>
                 </Grid>
 
                 {/* Line Chart */}
@@ -555,4 +593,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-

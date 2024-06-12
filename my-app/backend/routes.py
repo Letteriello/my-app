@@ -1,41 +1,50 @@
-from flask import Blueprint, jsonify, request
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-from backend.models import User
-from backend import db
+from flask import Blueprint, request, jsonify
+from .models import User
 
-main_bp = Blueprint('main', __name__)
+routes_bp = Blueprint('routes_bp', __name__)
 
-@main_bp.route('/api/hello', methods=['GET'])
+@routes_bp.route('/hello', methods=['GET'])
 def hello():
-    return jsonify(message="Hello from Flask!")
+    return jsonify({"message": "Hello from Flask!"})
 
-@main_bp.route('/api/register', methods=['POST'])
-def register():
+@routes_bp.route('/user_data', methods=['GET'])
+def get_user_data():
+    user_id = request.args.get('user_id')
+    user = User.query.get(user_id)
+    if user:
+        return jsonify({
+            "height": user.height,
+            "weight": user.weight,
+            "age": user.age,
+            "activity_level": user.activity_level
+        })
+    return jsonify({"msg": "User not found"}), 404
+
+@routes_bp.route('/calculate_tde', methods=['POST'])
+def calculate_tde():
     data = request.get_json()
-    hashed_password = generate_password_hash(data['password'], method='sha256')
-    new_user = User(username=data['username'], email=data['email'], password_hash=hashed_password)
-    db.session.add(new_user)
-    db.session.commit()
-    return jsonify({'message': 'User registered successfully'}), 201
+    height = data.get('height')
+    weight = data.get('weight')
+    age = data.get('age')
+    activity_level = data.get('activity_level')
 
-@main_bp.route('/api/login', methods=['POST'])
-def login():
-    data = request.get_json()
-    user = User.query.filter_by(username=data['username']).first()
-    if not user or not check_password_hash(user.password_hash, data['password']):
-        return jsonify({'message': 'Invalid credentials'}), 401
-    access_token = create_access_token(identity={'username': user.username, 'email': user.email})
-    return jsonify(access_token=access_token), 200
+    if not all([height, weight, age, activity_level]):
+        return jsonify({"msg": "Missing data"}), 400
 
-@main_bp.route('/api/protected', methods=['GET'])
-@jwt_required()
-def protected():
-    current_user = get_jwt_identity()
-    return jsonify(logged_in_as=current_user), 200
+    # Fórmula de Harris-Benedict revisada para TDE
+    if data.get('gender') == 'male':
+        bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age)
+    else:
+        bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age)
 
-@main_bp.route('/api/users', methods=['GET'])
-@jwt_required()
-def get_users():
-    users = User.query.all()
-    return jsonify([user.username for user in users])
+    activity_multipliers = {
+        "sedentary": 1.2,
+        "lightly active": 1.375,
+        "moderately active": 1.55,
+        "very active": 1.725,
+        "extra active": 1.9
+    }
+
+    tde = bmr * activity_multipliers.get(activity_level, 1.2)
+
+    return jsonify({"tde": tde})

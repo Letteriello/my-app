@@ -7,6 +7,7 @@ import Home from './components/Home';
 import Register from './components/Register';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
+import TdeCalculator from './components/TdeCalculator';
 import PrivateRoute from './components/PrivateRoute';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+        <Route path="/tde-calculator" element={<PrivateRoute><TdeCalculator /></PrivateRoute>} />
       </Routes>
       <ToastContainer />
     </ThemeProvider>
@@ -27,5 +29,3 @@ const App = () => {
 };
 
 export default App;
-
-
