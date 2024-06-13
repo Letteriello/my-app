@@ -1,7 +1,6 @@
 // Material Dashboard 2 React layouts
 import Dashboard from "layouts/dashboard";
 import DashboardOverview from "layouts/overview";
-import Billing from "layouts/billing";
 import RTL from "layouts/rtl";
 import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
@@ -10,6 +9,7 @@ import SignUp from "layouts/authentication/sign-up";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import Workouts from "layouts/workouts/Workouts";
 
 const routes = [
   {
@@ -31,10 +31,10 @@ const routes = [
   {
     type: "collapse",
     name: "Treinos",
-    key: "billing",
+    key: "workouts",
     icon: <Icon fontSize="small">fitness_center</Icon>,
-    route: "/billing",
-    component: <Billing />,
+    route: "/workouts",
+    component: <Workouts />,
   },
   {
     type: "collapse",
