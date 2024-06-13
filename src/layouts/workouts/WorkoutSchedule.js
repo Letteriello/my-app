@@ -95,7 +95,7 @@ function WorkoutSchedule() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Planilha de Treino
+                  Plano de Treinamento
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
