@@ -47,11 +47,12 @@ import SignUp from "layouts/authentication/sign-up";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import icon from "assets/theme/components/icon";
 
 const routes = [
   {
     type: "collapse",
-    name: "Dashboard",
+    name: "Perfil do Usuário",
     key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
@@ -59,7 +60,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Tables",
+    name: "Visão Geral",
     key: "tables",
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/tables",
@@ -67,7 +68,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Billing",
+    name: "Treinos",
     key: "billing",
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/billing",
@@ -75,7 +76,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "RTL",
+    name: "Dieta e Nutrição",
     key: "rtl",
     icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
     route: "/rtl",
@@ -83,7 +84,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Notifications",
+    name: "Saúde e Bem-Estar",
     key: "notifications",
     icon: <Icon fontSize="small">notifications</Icon>,
     route: "/notifications",
@@ -91,7 +92,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Profile",
+    name: "Dados e Estatísticas",
     key: "profile",
     icon: <Icon fontSize="small">person</Icon>,
     route: "/profile",
@@ -99,7 +100,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Sign In",
+    name: "Comunidade",
     key: "sign-in",
     icon: <Icon fontSize="small">login</Icon>,
     route: "/authentication/sign-in",
@@ -107,12 +108,30 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Sign Up",
+    name: "Ferramentas Adicionais",
     key: "sign-up",
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/authentication/sign-up",
     component: <SignUp />,
   },
+  {
+    type: "collapse",
+    name: "Configurações",
+    key: "divider",
+    icon: <Icon fontSize="small">more_horiz</Icon>, 
+    route: "/divider", 
+    component: <Icon fontSize="small">more_horiz</Icon>
+  },
+  {
+    type: "collapse",
+    name: "Ajuda e Suporte",
+    key: "divider",
+    icon: <Icon fontSize="small">more_horiz</Icon>,
+    route: "/divider",
+    component: <Icon fontSize="small">more_horiz</Icon>
+  }
+  
+  
 ];
 
 export default routes;
