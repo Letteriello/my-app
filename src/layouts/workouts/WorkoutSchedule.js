@@ -8,6 +8,7 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
+// Dados dos treinos
 const workoutSchedule = [
   {
     title: "Treino 1 - Peito, Ombro, Tríceps",
@@ -52,6 +53,16 @@ const workoutSchedule = [
   },
 ];
 
+// Dados do histórico de treinos
+const workoutHistory = [
+  { date: "2024-06-01", workout: "Treino 1 - Peito, Ombro, Tríceps", duration: "1h", calories: 500 },
+  { date: "2024-06-02", workout: "Treino 2 - Costas, Trapézio, Bíceps", duration: "1h", calories: 480 },
+  { date: "2024-06-03", workout: "Treino 3 - Pernas", duration: "1h 10m", calories: 600 },
+  { date: "2024-06-04", workout: "Treino 1 - Peito, Ombro, Tríceps", duration: "1h", calories: 510 },
+  { date: "2024-06-05", workout: "Treino 2 - Costas, Trapézio, Bíceps", duration: "1h", calories: 490 },
+  // ... (adicione mais dados conforme necessário)
+];
+
 function WorkoutSchedule() {
   const createTableData = () => {
     let tableData = [];
@@ -69,12 +80,28 @@ function WorkoutSchedule() {
     return tableData;
   };
 
+  const createHistoryData = () => {
+    return workoutHistory.map((history) => ({
+      Data: history.date,
+      Treino: history.workout,
+      Duração: history.duration,
+      Calorias: history.calories,
+    }));
+  };
+
   const columns = [
     { Header: "Treino", accessor: "Treino" },
     { Header: "Exercício", accessor: "Exercício" },
     { Header: "Séries", accessor: "Séries" },
     { Header: "Repetições", accessor: "Repetições" },
     { Header: "Trabalha", accessor: "Trabalha" },
+  ];
+
+  const historyColumns = [
+    { Header: "Data", accessor: "Data" },
+    { Header: "Treino", accessor: "Treino" },
+    { Header: "Duração", accessor: "Duração" },
+    { Header: "Calorias", accessor: "Calorias" },
   ];
 
   return (
@@ -95,7 +122,7 @@ function WorkoutSchedule() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Plano de Treinamento
+                  Planilha de Treino
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
@@ -105,6 +132,71 @@ function WorkoutSchedule() {
                   entriesPerPage={false}
                   showTotalEntries={false}
                   noEndBorder
+                  tableProps={{
+                    sx: {
+                      "& .MuiTableHead-root": {
+                        backgroundColor: "#f5f5f5",
+                      },
+                      "& .MuiTableCell-head": {
+                        color: "#3c4858",
+                        fontWeight: "bold",
+                      },
+                      "& .MuiTableRow-root": {
+                        "&:nth-of-type(even)": {
+                          backgroundColor: "#f9f9f9",
+                        },
+                      },
+                      "& .MuiTableCell-body": {
+                        borderBottom: "none",
+                      },
+                    },
+                  }}
+                />
+              </MDBox>
+            </Card>
+          </Grid>
+          <Grid item xs={12}>
+            <Card>
+              <MDBox
+                mx={2}
+                mt={-3}
+                py={3}
+                px={2}
+                variant="gradient"
+                bgColor="info"
+                borderRadius="lg"
+                coloredShadow="info"
+              >
+                <MDTypography variant="h6" color="white">
+                  Histórico de Treinos
+                </MDTypography>
+              </MDBox>
+              <MDBox pt={3}>
+                <DataTable
+                  table={{ columns: historyColumns, rows: createHistoryData() }}
+                  isSorted={false}
+                  entriesPerPage={false}
+                  showTotalEntries={false}
+                  noEndBorder
+                  tableProps={{
+                    sx: {
+                      "& .MuiTableHead-root": {
+                        backgroundColor: "#f5f5f5",
+                      },
+                      "& .MuiTableCell-head": {
+                        color: "#3c4858",
+                        fontWeight: "bold",
+                      },
+                      "& .MuiTableRow-root": {
+                        "&:nth-of-type(even)": {
+                          backgroundColor: "#f9f9f9",
+                        },
+                      },
+                      "& .MuiTableCell-body": {
+                        borderBottom: "none",
+                      },
+                    },
+                  }}
                 />
               </MDBox>
             </Card>
