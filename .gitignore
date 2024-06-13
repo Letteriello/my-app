@@ -1,31 +1,27 @@
-# Ignore arquivos de bytecode do Python
-__pycache__/
-*.pyc
+# See https://help.github.com/ignore-files/ for more about ignoring files.
 
-# Ignore diretórios de ambiente virtual
-venv/
-.env/
-
-# Ignore arquivos específicos do sistema
+# dependencies
+/node_modules
 .DS_Store
 
-# Ignore logs e bancos de dados
-*.log
-*.sqlite3
+# testing
+/coverage
 
-# Ignore outros arquivos grandes
-*.zip
-node_modules
-<<<<<<< Updated upstream
-node_modules
-node_modules
-node_modules
-node_modules
-node_modules
-node_modules
-node_modules
-node_modules
-node_modules
-node_modules
-=======
->>>>>>> Stashed changes
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+package-lock.json
+yarn.lock
+
+commit.sh
