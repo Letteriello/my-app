@@ -54,7 +54,7 @@ const routes = [
     type: "collapse",
     name: "Perfil do Usuário",
     key: "dashboard",
-    icon: <Icon fontSize="small">dashboard</Icon>,
+    icon: <Icon fontSize="small">person</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
   },
