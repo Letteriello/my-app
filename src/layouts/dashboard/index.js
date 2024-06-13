@@ -1,20 +1,7 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// @mui material components
 import Grid from "@mui/material/Grid";
+import Avatar from "@mui/material/Avatar";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -23,134 +10,125 @@ import MDBox from "components/MDBox";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
-import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
-import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
-import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
-
-// Data
-import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
-import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
-
-// Dashboard components
-import Projects from "layouts/dashboard/components/Projects";
-import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
 
 function Dashboard() {
-  const { sales, tasks } = reportsLineChartData;
+  const user = {
+    fullName: "Gabriel Letteriello",
+    email: "gabriel.letteriello.ai@gmail.com",
+    address: "Rua Porto Novo, 286, Campo Grande - MS",
+    dateOfBirth: "1995-10-31",
+    phone: "+55 67 99332-5366",
+    profilePicture: "https://via.placeholder.com/150", // Substitua pelo caminho correto da imagem
+    height: "185 cm",
+    weight: "98 kg",
+    dietaryRestrictions: "Nenhuma",
+    allergies: "Nenhuma"
+  };
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox py={3}>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="dark"
-                icon="weekend"
-                title="Bookings"
-                count={281}
-                percentage={{
-                  color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
-                }}
-              />
+          <Grid item xs={12} md={4} lg={3}>
+            <MDBox mb={1.5} display="flex" justifyContent="center">
+              <Avatar src={user.profilePicture} alt={user.fullName} sx={{ width: 120, height: 120 }} />
             </MDBox>
           </Grid>
-          <Grid item xs={12} md={6} lg={3}>
+          <Grid item xs={12} md={8} lg={9}>
             <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                icon="leaderboard"
-                title="Today's Users"
-                count="2,300"
-                percentage={{
-                  color: "success",
-                  amount: "+3%",
-                  label: "than last month",
-                }}
+              <h1>{user.fullName}</h1>
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Nome Completo"
+                variant="outlined"
+                defaultValue={user.fullName}
               />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="success"
-                icon="store"
-                title="Revenue"
-                count="34k"
-                percentage={{
-                  color: "success",
-                  amount: "+1%",
-                  label: "than yesterday",
-                }}
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Endereço"
+                variant="outlined"
+                defaultValue={user.address}
               />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="primary"
-                icon="person_add"
-                title="Followers"
-                count="+91"
-                percentage={{
-                  color: "success",
-                  amount: "",
-                  label: "Just updated",
-                }}
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Data de Nascimento"
+                type="date"
+                InputLabelProps={{ shrink: true }}
+                defaultValue={user.dateOfBirth}
               />
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Telefone"
+                variant="outlined"
+                defaultValue={user.phone}
+              />
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Email"
+                variant="outlined"
+                defaultValue={user.email}
+              />
+              <MDBox mt={2}>
+                <Button variant="contained" color="primary">Salvar Alterações</Button>
+              </MDBox>
             </MDBox>
           </Grid>
         </Grid>
         <MDBox mt={4.5}>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
-                <ReportsBarChart
-                  color="info"
-                  title="website views"
-                  description="Last Campaign Performance"
-                  date="campaign sent 2 days ago"
-                  chart={reportsBarChartData}
-                />
+            <Grid item xs={12}>
+              <h2>Dados de Saúde</h2>
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Altura"
+                variant="outlined"
+                defaultValue={user.height}
+              />
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Peso"
+                variant="outlined"
+                defaultValue={user.weight}
+              />
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Restrições Alimentares"
+                variant="outlined"
+                defaultValue={user.dietaryRestrictions}
+              />
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Alergias"
+                variant="outlined"
+                defaultValue={user.allergies}
+              />
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Doenças Crônicas"
+                variant="outlined"
+                defaultValue="Nenhuma"
+              />
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Medicamentos em Uso"
+                variant="outlined"
+                defaultValue="Nenhum"
+              />
+              <MDBox mt={2}>
+                <Button variant="contained" color="primary">Atualizar Informações de Saúde</Button>
               </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
-                <ReportsLineChart
-                  color="success"
-                  title="daily sales"
-                  description={
-                    <>
-                      (<strong>+15%</strong>) increase in today sales.
-                    </>
-                  }
-                  date="updated 4 min ago"
-                  chart={sales}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
-                <ReportsLineChart
-                  color="dark"
-                  title="completed tasks"
-                  description="Last Campaign Performance"
-                  date="just updated"
-                  chart={tasks}
-                />
-              </MDBox>
-            </Grid>
-          </Grid>
-        </MDBox>
-        <MDBox>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={8}>
-              <Projects />
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <OrdersOverview />
             </Grid>
           </Grid>
         </MDBox>

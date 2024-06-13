@@ -54,7 +54,7 @@ const routes = [
     type: "collapse",
     name: "Perfil do Usuário",
     key: "dashboard",
-    icon: <Icon fontSize="small">person</Icon>,
+    icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
   },
@@ -118,7 +118,7 @@ const routes = [
     type: "collapse",
     name: "Configurações",
     key: "divider",
-    icon: <Icon fontSize="small">settings</Icon>, 
+    icon: <Icon fontSize="small">dashboard</Icon>, 
     route: "/divider", 
     component: <Icon fontSize="small">more_horiz</Icon>
   },
@@ -126,7 +126,7 @@ const routes = [
     type: "collapse",
     name: "Ajuda e Suporte",
     key: "divider",
-    icon: <Icon fontSize="small">help</Icon>,
+    icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/divider",
     component: <Icon fontSize="small">more_horiz</Icon>
   }
