@@ -29,10 +29,27 @@ const Nutrition = () => {
     }
   };
 
+  const fetchMealHistory = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/nutrition/meal_history');
+      setMealHistory(response.data.mealHistory);
+    } catch (error) {
+      console.error("There was an error fetching the meal history!", error);
+    }
+  };
+
+  const fetchNutritionPlan = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/nutrition/nutrition_plan');
+      setNutritionPlan(response.data.nutritionPlan);
+    } catch (error) {
+      console.error("There was an error fetching the nutrition plan!", error);
+    }
+  };
+
   useEffect(() => {
-    // Aqui você pode fazer chamadas para buscar o histórico de refeições e planos alimentares
-    // setMealHistory(dadosDoHistorico);
-    // setNutritionPlan(dadosDoPlano);
+    fetchMealHistory();
+    fetchNutritionPlan();
   }, []);
 
   return (
@@ -53,67 +70,15 @@ const Nutrition = () => {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Planos Alimentares
+                  Recomendações Nutricionais
                 </MDTypography>
               </MDBox>
-              <MDBox pt={3}>
-                {nutritionPlan.map((plan, index) => (
-                  <MDTypography key={index} variant="body2" color="textSecondary">
-                    {plan}
-                  </MDTypography>
-                ))}
-              </MDBox>
-            </Card>
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <Card>
-              <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="info"
-                borderRadius="lg"
-                coloredShadow="info"
-              >
-                <MDTypography variant="h6" color="white">
-                  Histórico de Refeições
-                </MDTypography>
-              </MDBox>
-              <MDBox pt={3}>
-                {mealHistory.map((meal, index) => (
-                  <MDTypography key={index} variant="body2" color="textSecondary">
-                    {meal}
-                  </MDTypography>
-                ))}
-              </MDBox>
-            </Card>
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <Card>
-              <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="info"
-                borderRadius="lg"
-                coloredShadow="info"
-              >
-                <MDTypography variant="h6" color="white">
-                  Recomendação de Dietas
-                </MDTypography>
-              </MDBox>
-              <MDBox pt={3}>
+              <MDBox pt={3} pb={2} px={2}>
                 <Button variant="contained" color="primary" onClick={getRecommendation}>
-                  Obter Recomendação
+                  Obter Recomendações
                 </Button>
                 {recommendation && (
-                  <MDBox mt={2}>
+                  <MDBox mt={3}>
                     <MDTypography>Calorias: {recommendation.calories}</MDTypography>
                     <MDTypography>Proteínas: {recommendation.protein}g</MDTypography>
                     <MDTypography>Carboidratos: {recommendation.carbs}g</MDTypography>
@@ -173,6 +138,62 @@ const Nutrition = () => {
                   fullWidth
                   margin="normal"
                 />
+              </MDBox>
+            </Card>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Card>
+              <MDBox
+                mx={2}
+                mt={-3}
+                py={3}
+                px={2}
+                variant="gradient"
+                bgColor="info"
+                borderRadius="lg"
+                coloredShadow="info"
+              >
+                <MDTypography variant="h6" color="white">
+                  Histórico de Refeições
+                </MDTypography>
+              </MDBox>
+              <MDBox pt={3} pb={2} px={2}>
+                <ul>
+                  {mealHistory.map((meal, index) => (
+                    <li key={index}>
+                      <MDTypography>{meal}</MDTypography>
+                    </li>
+                  ))}
+                </ul>
+              </MDBox>
+            </Card>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Card>
+              <MDBox
+                mx={2}
+                mt={-3}
+                py={3}
+                px={2}
+                variant="gradient"
+                bgColor="info"
+                borderRadius="lg"
+                coloredShadow="info"
+              >
+                <MDTypography variant="h6" color="white">
+                  Plano Nutricional
+                </MDTypography>
+              </MDBox>
+              <MDBox pt={3} pb={2} px={2}>
+                <ul>
+                  {nutritionPlan.map((plan, index) => (
+                    <li key={index}>
+                      <MDTypography>{plan}</MDTypography>
+                    </li>
+                  ))}
+                </ul>
               </MDBox>
             </Card>
           </Grid>

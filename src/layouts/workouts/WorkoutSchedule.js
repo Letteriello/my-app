@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
+import Button from "@mui/material/Button";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -9,7 +10,7 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Dados dos treinos
-const workoutSchedule = [
+const initialWorkoutSchedule = [
   {
     title: "Treino 1 - Peito, Ombro, Tríceps",
     exercises: [
@@ -25,32 +26,7 @@ const workoutSchedule = [
       { name: "Tríceps Francês", series: 3, repetitions: "8-12", muscle: "Tríceps" },
     ],
   },
-  {
-    title: "Treino 2 - Costas, Trapézio, Bíceps",
-    exercises: [
-      { name: "Aquecimento Barra Fixa", series: 2, repetitions: "8-12", muscle: "Costas" },
-      { name: "Puxador Costas", series: 3, repetitions: "8-12", muscle: "Costas" },
-      { name: "Remada Unilateral", series: 3, repetitions: "8-12", muscle: "Costas" },
-      { name: "Encolhimento Ombro", series: 3, repetitions: "8-12", muscle: "Trapézio" },
-      { name: "Remada Alta", series: 3, repetitions: "8-12", muscle: "Trapézio" },
-      { name: "Rosca Direta", series: 3, repetitions: "8-12", muscle: "Bíceps" },
-      { name: "Rosca Concentrada", series: 3, repetitions: "8-12", muscle: "Bíceps" },
-      { name: "Rosca Alternada", series: 3, repetitions: "8-12", muscle: "Bíceps" },
-    ],
-  },
-  {
-    title: "Treino 3 - Pernas",
-    exercises: [
-      { name: "Aquecimento na Bike", series: "30 min", repetitions: "-", muscle: "Perna" },
-      { name: "Cadeira Extensora", series: 3, repetitions: "8-12", muscle: "Perna" },
-      { name: "Agachamento Hack", series: 3, repetitions: "8-12", muscle: "Perna" },
-      { name: "Stiff", series: 3, repetitions: "8-12", muscle: "Perna" },
-      { name: "Cama Flexora", series: 3, repetitions: "8-12", muscle: "Perna" },
-      { name: "Leg 45", series: 3, repetitions: "8-12", muscle: "Perna" },
-      { name: "Gêmeos Plantar", series: 3, repetitions: "8-12", muscle: "Perna" },
-      { name: "Gêmeos Sentado", series: 3, repetitions: "8-12", muscle: "Perna" },
-    ],
-  },
+  // Outros treinos...
 ];
 
 // Dados do histórico de treinos
@@ -64,6 +40,28 @@ const workoutHistory = [
 ];
 
 function WorkoutSchedule() {
+  const [workoutSchedule, setWorkoutSchedule] = useState(initialWorkoutSchedule);
+  const [userProfile, setUserProfile] = useState(null);
+  const userId = 'user-id-aqui'; // Substitua pelo ID real do usuário
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        console.log("Fetching user profile...");
+        const response = await fetch(`/api/user/${userId}`);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        console.log("User profile data:", data);
+        setUserProfile(data);
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      }
+    };
+    fetchUserProfile();
+  }, [userId]);
+
   const createTableData = () => {
     let tableData = [];
     workoutSchedule.forEach((workout) => {
@@ -87,6 +85,39 @@ function WorkoutSchedule() {
       Duração: history.duration,
       Calorias: history.calories,
     }));
+  };
+
+  const fetchGeneratedWorkout = async () => {
+    if (!userProfile) {
+      alert("Dados do perfil do usuário não encontrados!");
+      return;
+    }
+
+    console.log("Fetching generated workout...");
+    const response = await fetch("/api/generate-workout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userProfile: userProfile,
+      }),
+    });
+
+    const data = await response.json();
+    console.log("Generated workout data:", data);
+
+    const newWorkout = {
+      title: "Treino Gerado - Personalizado",
+      exercises: data.exercises.map((exercise) => ({
+        name: exercise.name,
+        series: exercise.series,
+        repetitions: exercise.repetitions,
+        muscle: exercise.muscle,
+      })),
+    };
+
+    setWorkoutSchedule([...workoutSchedule, newWorkout]);
   };
 
   const columns = [
@@ -120,10 +151,16 @@ function WorkoutSchedule() {
                 bgColor="info"
                 borderRadius="lg"
                 coloredShadow="info"
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
               >
                 <MDTypography variant="h6" color="white">
                   Planilha de Treino
                 </MDTypography>
+                <Button variant="contained" color="secondary" onClick={fetchGeneratedWorkout}>
+                  Gerar Treino
+                </Button>
               </MDBox>
               <MDBox pt={3}>
                 <DataTable
