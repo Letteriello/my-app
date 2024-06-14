@@ -2,7 +2,7 @@
 import Dashboard from "layouts/dashboard";
 import DashboardOverview from "layouts/overview";
 import WorkoutSchedule from "layouts/workouts/WorkoutSchedule";
-import RTL from "layouts/rtl";
+import Nutrition from "layouts/diet-nutrition/Nutrition";
 import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
@@ -41,10 +41,10 @@ const routes = [
   {
     type: "collapse",
     name: "Dieta e Nutrição",
-    key: "rtl",
+    key: "diet-nutrition",
     icon: <Icon fontSize="small">restaurant_menu</Icon>,
-    route: "/rtl",
-    component: <RTL />,
+    route: "/diet-nutrition",
+    component: <Nutrition />,
   },
   {
     type: "collapse",
